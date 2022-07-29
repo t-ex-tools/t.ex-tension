@@ -26,8 +26,7 @@ module.exports = (env) => {
     }
   };
   
-  console.log(env.mv);
-  env.mv = (env) ? env.mv : "2";
+  env.mv = (env.mv) ? env.mv : "2";
   
   let config = {
     entry: "./src/index.js",
@@ -37,12 +36,6 @@ module.exports = (env) => {
         patterns: [
           { 
             from: "public" 
-          }, {
-            from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
-            to: "js/browser-polyfill.min.js"
-          }, {
-            from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js.map",
-            to: "js/browser-polyfill.min.js.map"
           }, {
             from: "./manifest.mv" + env.mv + ".json",
             to: "manifest.json"
