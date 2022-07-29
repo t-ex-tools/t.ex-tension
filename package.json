@@ -1,0 +1,34 @@
+{
+  "name": "t.ex-tension",
+  "version": "3.2.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js",
+    "dev": "npx webpack --watch --config webpack.config.js",
+    "build:mv3": "npx webpack --config webpack.config.js --env mv=3",
+    "dev:mv3": "npx webpack --watch --config webpack.config.js --env mv=3"
+  },
+  "dependencies": {
+    "tldjs": "^2.3.1",
+    "url": "^0.11.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "eslint": "^7.0.0",
+    "eslint-webpack-plugin": "^3.2.0",
+    "webextension-polyfill": "^0.9.0",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "ncp": "^2.0.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
