@@ -37,6 +37,12 @@ module.exports = (env) => {
           { 
             from: "public" 
           }, {
+            from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
+            to: "js/browser-polyfill.min.js"
+          }, {
+            from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js.map",
+            to: "js/browser-polyfill.min.js.map"
+          }, {
             from: "./manifest.mv" + env.mv + ".json",
             to: "manifest.json"
           }
