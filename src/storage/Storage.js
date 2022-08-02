@@ -1,3 +1,5 @@
+import browser from "webextension-polyfill";
+
 export default {
   get: (key) => browser.storage.local.get(key),
 

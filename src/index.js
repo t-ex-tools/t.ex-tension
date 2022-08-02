@@ -9,6 +9,8 @@ import Storage from "./storage/Storage.js";
 import WebsiteList from "./classes/WebsiteList.js";
 import Crawl from "./classes/Crawl.js";
 import Setting from "./classes/Setting.js";
+import Chunk from "./classes/Chunk.js";
+import Index from "./classes/Index.js";
 
 export default {
   Crawler,
@@ -21,5 +23,7 @@ export default {
   Storage,
   WebsiteList,
   Crawl,
-  Setting
+  Setting,
+  Chunk,
+  Index
 };

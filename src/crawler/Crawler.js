@@ -1,5 +1,6 @@
 import Crawl from "../classes/Crawl.js";
 import Setting from "../classes/Setting.js";
+import browser from "webextension-polyfill";
 
 var Crawler = (() => {
   let urls = [];
@@ -49,7 +50,12 @@ var Crawler = (() => {
     end: function () {
       browser.runtime
         .sendMessage(
-          { recording: false, flush: true }
+          { recording: false }
+        );
+
+      browser.runtime
+        .sendMessage(
+          { flush: true }
         ).then((id) => {
           log.doneAt = id;
           Crawl.add(
@@ -59,7 +65,7 @@ var Crawler = (() => {
               log = Crawl.log();
             }
           );
-        });
+        }).catch((err) => console.log(err));
 
       browser.tabs.onCreated.removeListener(onCreatedRef);
       browser.tabs.onRemoved.removeListener(onRemovedRef);

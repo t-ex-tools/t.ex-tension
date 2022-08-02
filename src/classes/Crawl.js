@@ -1,4 +1,5 @@
 import Storage from "../storage/Storage";
+import browser from "webextension-polyfill";
 
 /**
  * The key at which the crawls array is stored in the key-value store.
