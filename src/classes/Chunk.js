@@ -41,7 +41,7 @@ export default {
   write(chunk, handler) {
     this.save(chunk, () => {
       Index.add(
-        Object.keys(chunk).pop(),
+        Number(Object.keys(chunk).pop()),
         (indexes) => handler(indexes)
       );
     });

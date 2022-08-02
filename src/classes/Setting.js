@@ -54,7 +54,7 @@ export default {
   save(settings, handler) {
     Storage
       .set({ [key]: settings })
-      .then(() => handler(settings));
+      .then(() => handler({ [key]: settings }));
   },
 
   /**

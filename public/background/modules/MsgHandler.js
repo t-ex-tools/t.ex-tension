@@ -40,6 +40,14 @@ export default (() => {
     .onMessage
     .addListener((msg) => {
       let key = Object.keys(msg).pop();
+
+      if (!handler[key]) {
+        return Promise
+          .reject(
+            new Error("No handler for message type " + key)
+          );
+      }
+
       let result = handler[key].handle(msg[key]);
       return Promise.resolve(result);
     });
