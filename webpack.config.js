@@ -27,13 +27,14 @@ module.exports = (env) => {
   };
   
   env.mv = (env.mv) ? env.mv : "2";
+  env.mode = (env.mode) ? env.mode : "development";
   
   let config = {
     entry: "./src/index.js",
-    mode: "development",
+    mode: env.mode,
     devtool: 'inline-source-map',
     optimization: {
-      minimize: false
+      minimize: (env.mode === "production")
     },
     plugins: [
       new CopyPlugin({

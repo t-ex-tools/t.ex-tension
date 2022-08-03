@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack --config webpack.config.js",
+    "build": "npx webpack --config webpack.config.js --env mode='production'",
     "dev": "npx webpack --watch --config webpack.config.js",
     "build:mv3": "npx webpack --config webpack.config.js --env mv=3",
     "dev:mv3": "npx webpack --watch --config webpack.config.js --env mv=3"
