@@ -1,9 +1,13 @@
 import FeatureExtractor from "../features/FeatureExtractor.js";
-import Data from "./Data.js";
-import StatisticsTmpStorage from "./StatisticsTmpStorage.js";
+import DataStream from "./DataStream.js";
+import Temp from "./Temp.js";
 
 var Statistics = (() => {
   let stats = {};
+
+  let put = (data, value) => (data[value])
+    ? data[value]++
+    : data[value] = 1
 
   return {
     count: (chunk, handler, info) => {
@@ -17,7 +21,8 @@ var Statistics = (() => {
         if (typeof x === "object" && x.length > 0) {
           x.forEach((e, j, arr) => {
             let kv = FeatureExtractor.encode(e);
-            stats[info.query][info.group][info.feature].put(kv);
+            stats[info.query][info.group][info.feature]
+              .exec((data) => put(data, kv));
 
             if (i === array.length - 1 &&
                 j === arr.length - 1) {
@@ -25,7 +30,8 @@ var Statistics = (() => {
               }
           });
         } else {
-          stats[info.query][info.group][info.feature].put(x);
+          stats[info.query][info.group][info.feature]
+            .exec((data) => put(data, x));
 
           if (i === array.length - 1) {
             handler(info);
@@ -34,7 +40,7 @@ var Statistics = (() => {
       });
     },
     // NOTE: all features must be of same type
-    query: function (type, queries, handler) {
+    query: function (boundaries, type, queries, handler) {
       [...new Set(Object
         .values(queries)
         .flat()
@@ -80,7 +86,7 @@ var Statistics = (() => {
         return;
       }
 
-      Data.stream(type, (chunk, index, total) => {
+      DataStream.labeled(boundaries, type, (chunk, index, total) => {
         window.dispatchEvent(new CustomEvent("statistics:loading:update", {
           detail: {
             loaded: index,
@@ -100,7 +106,7 @@ var Statistics = (() => {
                 query.members.forEach((g, i) => {
 
                   if (!stats[query.id][i][feature]) {
-                    stats[query.id][i][feature] = new StatisticsTmpStorage();
+                    stats[query.id][i][feature] = new Temp({});
                   }
 
                   let c = chunk.filter(g.filter);

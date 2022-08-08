@@ -1,6 +1,6 @@
 import Storage from "../storage/Storage.js";
 import Index from "./Index.js";
-import LZString from "lz-string";
+import Compressor from "../data/Compressor.js";
 import browser from "webextension-polyfill";
 
 /**
@@ -14,11 +14,11 @@ export default {
     return {
       [id]: {
         http: {
-          data: LZString.compressToUTF16(JSON.stringify(http)),
+          data: Compressor.compress(http),
           size: http.length
         },
         js: {
-          data: LZString.compressToUTF16(JSON.stringify(js)),
+          data: Compressor.compress(js),
           size: js.length
         },
         version: browser.runtime.getManifest().version

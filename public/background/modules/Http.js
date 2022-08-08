@@ -1,13 +1,13 @@
 import Queue from "./Queue.js";
 
 const urlFilter = { urls: ["http://*/*", "https://*/*"] };
-const firefox = browser.runtime.hasOwnProperty("getBrowserInfo");
+const firefox = tex.Runtime.hasOwnProperty("getBrowserInfo");
 
 export default (() => {
   let http = {};
   let settings = {};
 
-  tex.default.Setting.get(
+  tex.Setting.get(
     ["httpBody"],
     (config) => settings = config
   );

@@ -3,7 +3,7 @@ export default (() => {
   let settings = {};
   let recording = false;
 
-  tex.default.Setting.get(
+  tex.Setting.get(
     ["chunkSize", "jsChunkSize", "backgroundRecording"],
     (config) => settings = config
   );
@@ -17,8 +17,8 @@ export default (() => {
     settings.jsChunkSize <= queue.js.length;
 
   let persist = (http, js, id) => {
-    let chunk = tex.default.Chunk.build(http, js, id);
-    tex.default.Chunk.write(chunk, () => {
+    let chunk = tex.Chunk.build(http, js, id);
+    tex.Chunk.write(chunk, () => {
       console.debug("Chunk saved.");
     });
   };

@@ -1,5 +1,7 @@
-var ChunksPreprocessor = (() => {
-  let transform = {
+export default {
+
+  transform: {
+
     http: (r) => {
       let params = {};
           
@@ -36,29 +38,29 @@ var ChunksPreprocessor = (() => {
 
       return params;
     },
+
     js: (r) => ({
       url: r.url,
       domain: r.source,
       type: "script"
     })
-  };
+  },
 
-  let filter = {
+  filter: {
+
     http: (r) => {
       return r.url !== undefined && 
         r.response !== undefined &&
         r.success;
     },
+
     js: (r) => {
       return r &&
         r.url &&
         r.source &&
         r.type;
     }
-  };
+    
+  }
 
-  return {
-    transform: transform,
-    filter: filter
-  };
-})();
+};

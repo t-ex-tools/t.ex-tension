@@ -1,4 +1,5 @@
-import Data from "./Data.js";
+import Blocklists from "../config/Blocklists.js";
+import Preprocessor from "./Preprocessor.js";
 import Util from "./Util.js";
 import validator from "validator";
 import { getDomain } from "tldjs";
@@ -16,8 +17,8 @@ var DefaultQueries = (() => {
 
   let isTP = (r) => {
     let transformed = (r.interface)
-      ? ChunksPreprocessor.transform.js(r)
-      : ChunksPreprocessor.transform.http(r);
+      ? Preprocessor.transform.js(r)
+      : Preprocessor.transform.http(r);
 
     let url = getDomain(new URL(transformed.url).hostname);
     let domain = undefined;
@@ -60,22 +61,19 @@ var DefaultQueries = (() => {
     }]    
   }
   
-  let defaultGroups = [];
-  Data.blocklists((lists) => {
-    defaultGroups = lists
-      .filter((l) => l.active)
-      .map((l, i) => ({
-        id: Util.randomString(),
-        label: l.name,
-        members: [{
-          label: "Labeled by",
-          filter: (r) => r.labels[i].isLabeled
-        }, {
-          label: "Not labeled by",
-          filter: (r) => !r.labels[i].isLabeled
-        }]
-      }));
-  });
+  let defaultGroups = Blocklists
+    .filter((l) => l.active)
+    .map((l, i) => ({
+      id: Util.randomString(),
+      label: l.name,
+      members: [{
+        label: "Labeled by",
+        filter: (r) => r.labels[i].isLabeled
+      }, {
+        label: "Not labeled by",
+        filter: (r) => !r.labels[i].isLabeled
+      }]
+    }));
 
   return {
     groups: () => {

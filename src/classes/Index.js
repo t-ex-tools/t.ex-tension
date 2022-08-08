@@ -87,4 +87,10 @@ export default {
     });
   },
 
+  range(indexes, lower, upper) {
+    return indexes
+      .filter((t) => t >= lower && t <= upper)
+      .map((t) => t.toString());
+  },
+
 };

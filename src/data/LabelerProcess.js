@@ -1,17 +1,25 @@
-var ChunksHandler = (() => {
+import Compressor from "./Compressor.js";
+import Preprocessor from "./Preprocessor.js";
+import Blocklists from "../config/Blocklists.js";
+import { Labeler } from "labeler-core/dist/labeler-core.module.js";
+
+export default (() => {
   let cache = {};
   const interval = 1250; 
+  
+  let blocklists = Blocklists
+    .filter((l) => l.active)
+    .map((e) => new Labeler.BlockList(e.name, e.url, e.evaluator));
 
   return {
-    process: (msg, handler) => {
+
+    exec: (msg, handler) => {
       let data = msg.data.data;
       let type = msg.data.type;
 
-      let set = JSON.parse(
-        LZString.decompressFromUTF16(
-          data.chunk[type].data
-        )
-      ).filter(ChunksPreprocessor.filter[type]);
+      let set = Compressor
+        .decompress(data.chunk[type].data)
+        .filter(Preprocessor.filter[type]);
 
       if (set.length === 0) {
         handler([], data.index, 0, 0);
@@ -36,7 +44,7 @@ var ChunksHandler = (() => {
       
       set
         .forEach((r, i) => {
-          let params = ChunksPreprocessor.transform[type](r);
+          let params = Preprocessor.transform[type](r);
           r.labels = blocklists.map((e) => e.isLabeled(params));
         
           if (i === set.length-1) {

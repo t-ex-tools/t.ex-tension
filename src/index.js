@@ -1,5 +1,5 @@
 import Crawler from "./crawler/Crawler.js";
-import Data from "./data/Data.js";
+import DataStream from "./data/DataStream.js";
 import Queries from "./data/Queries.js";
 import FeatureExtractor from "./features/FeatureExtractor.js";
 import Settings from "./config/Settings.js";
@@ -11,10 +11,20 @@ import Crawl from "./classes/Crawl.js";
 import Setting from "./classes/Setting.js";
 import Chunk from "./classes/Chunk.js";
 import Index from "./classes/Index.js";
+import LabelerManager from "./data/LabelerManager.js";
+import Table from "./data/Table.js";
+import StatisticsController from "./controller/StatisticsController.js";
+import Compressor from "./data/Compressor.js";
+import Preprocessor from "./data/Preprocessor.js";
+import Temp from "./data/Temp.js";
+import Blocklists from "./config/Blocklists.js";
 
-export default {
+import browser from "webextension-polyfill";
+const Runtime = browser.runtime;
+
+export {
   Crawler,
-  Data,
+  DataStream,
   Queries,
   FeatureExtractor,
   Settings,
@@ -25,5 +35,14 @@ export default {
   Crawl,
   Setting,
   Chunk,
-  Index
+  Index,
+  LabelerManager,
+  Table,
+  StatisticsController,
+  Compressor,
+  Preprocessor,
+  Temp,
+  Blocklists,
+
+  Runtime,
 };

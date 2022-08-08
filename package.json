@@ -10,6 +10,7 @@
     "dev:mv3": "npx webpack --watch --config webpack.config.js --env mv=3"
   },
   "dependencies": {
+    "labeler-core": "file:../labeler-core",
     "lz-string": "^1.4.4",
     "t.ex": "file:..",
     "tldjs": "^2.3.1",

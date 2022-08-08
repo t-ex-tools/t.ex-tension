@@ -36,7 +36,7 @@ export default (() => {
 
   };
 
-  browser.runtime
+  tex.Runtime
     .onMessage
     .addListener((msg) => {
       let key = Object.keys(msg).pop();

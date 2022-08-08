@@ -63,9 +63,36 @@ module.exports = (env) => {
     }
   };
 
+  let noBrowser = {
+    entry: "./src/noBrowser.js",
+    mode: env.mode,
+    devtool: 'inline-source-map',
+    optimization: {
+      minimize: (env.mode === "production")
+    },
+    output: {
+      filename: "js/tex.noBrowser.var.js",
+      path: path.resolve(__dirname, "dist/"),
+      library: {
+        name: "tex",
+        type: "var"
+      },
+    },
+    plugins: [
+      new ESLintPlugin()
+    ],
+    resolve: {
+      extensions: [".js"],
+      modules: [
+        path.join(__dirname, "node_modules")
+      ],
+    }
+  };
+
   return [
     Object.assign({ ...config }, moduleConfig),
     Object.assign({ ...config }, varConfig),
+    noBrowser
   ];
 
 };
