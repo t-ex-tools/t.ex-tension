@@ -3,7 +3,7 @@ import Index from "../classes/Index.js";
 import Setting from "../classes/Setting.js";
 import LabelerManager from "./LabelerManager.js";
 
-var Data = (() => {
+var DataStream = (() => {
   let indexes = [];
   let settings = {};
 
@@ -68,4 +68,4 @@ var Data = (() => {
   };
 })();
 
-export default Data;
+export default DataStream;

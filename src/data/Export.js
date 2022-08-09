@@ -1,7 +1,68 @@
 import Table from "./Table.js";
 import StatisticsController from "../controller/StatisticsController.js";
+import DataStream from "./DataStream.js";
+import FeatureExtractor from "../features/FeatureExtractor.js";
+
+const memoryLimit = 250 * 1000000;
+
+let transform = (chunk, features) => {
+  return chunk.map((d) => {
+    let output = features.reduce((acc, f) => {
+      let path = f.split(".").slice(1);
+      let last = path.pop();
+
+      // https://stackoverflow.com/a/39249367
+      // from Laurens' answer on Aug 31, 2016 at 12:14
+      let obj = path.reduce((o, key) => (o[key] = o[key] || {}), acc);
+      obj[last] = FeatureExtractor.extract(f, d);
+      acc.labels = d.labels;
+
+      return acc;
+    }, {});
+    return output;
+  });
+};
+
+let shouldDownload = (batch, loaded, total) => 
+  memoryLimit <= tex.Util.memorySizeOf(batch) || loaded === total;
 
 export default {
+
+  data(boundaries, type, features, dataTag, handler) {
+    let batch = [];
+    let n = 0;
+
+    DataStream.labeled(boundaries, type, (chunk, loaded, total) => {
+      handler(loaded, total);
+
+      if (chunk === null) {
+        return;
+      }
+
+      if (features.length > 0) {
+        chunk = transform(chunk, features)
+      }
+
+      batch = batch.concat(chunk);
+      
+      if (shouldDownload(batch, loaded, total)) {
+        let path = [dataTag, type];
+        let filename = [type, n];
+        let ext = "json";
+
+        filename = this.filename(path, filename, ext);
+
+        this.download(
+          filename, 
+          JSON.stringify([ ...batch ]), 
+          "application/json"
+        );
+        
+        n++;
+        batch = [];
+      }
+    });
+  },
 
   statistics(boundaries, type, queries, dataTag) {
 
