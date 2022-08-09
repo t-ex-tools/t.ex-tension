@@ -10,6 +10,7 @@ var Statistics = (() => {
     : data[value] = 1
 
   return {
+
     count: (chunk, handler, info) => {
       if (chunk.length === 0) {
         handler(info)
@@ -126,9 +127,15 @@ var Statistics = (() => {
       });
       
     },
+
     sum: function (data) {
       return data.reduce((acc, val) => acc += val, 0);
-    }
+    },
+
+    percent: function (dividend, divisor) {
+      return ((dividend / divisor) * 100).toFixed(2)
+    },
+
   };
 })();
 

@@ -41,39 +41,7 @@ var Util = (() => {
 
       return sizeOf(obj);
     },
-
-    percent: function (dividend, divisor) {
-      return ((dividend / divisor) * 100).toFixed(2)
-    },
-
-    csv: function (table) {
-      return table
-        .map((row) => {
-          return row
-            .map((h) => '"' + h.toString().replace(/"/g, '\\"') + '"')
-            .join(",");
-        }).join("\n");
-    },
-
-    download(payload, ext, tag, feature, slug, label) {
-      browser.downloads.download({
-        filename:
-          tag.replaceAll("/", "-") +
-          "/" +
-          feature +
-          "/" +
-          feature +
-          "." +
-          slug +
-          "-" +
-          label +
-          "." +
-          ext,
-        url: URL.createObjectURL(
-          new Blob([payload], { type: "data:application/csv;charset=utf-8" })
-        ),
-      });
-    },
+    
   };
 })();
 

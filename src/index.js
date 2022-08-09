@@ -18,6 +18,7 @@ import Compressor from "./data/Compressor.js";
 import Preprocessor from "./data/Preprocessor.js";
 import Temp from "./data/Temp.js";
 import Blocklists from "./config/Blocklists.js";
+import Export from "./data/Export.js";
 
 import browser from "webextension-polyfill";
 const Runtime = browser.runtime;
@@ -43,6 +44,7 @@ export {
   Preprocessor,
   Temp,
   Blocklists,
+  Export,
 
   Runtime,
 };
