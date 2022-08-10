@@ -5,7 +5,7 @@ import { Labeler } from "labeler-core/dist/labeler-core.module.js";
 
 export default (() => {
   let cache = {};
-  const interval = 1250; 
+  const interval = 1250;
   
   let blocklists = Blocklists
     .filter((l) => l.active)
@@ -26,9 +26,10 @@ export default (() => {
       }
     
       if (cache[type] && cache[type][data.index]) {
+        let cached = Compressor.decompress(cache[type][data.index]);
         let chunk = set
           .map((r, i) => {
-            r.labels = cache[type][data.index][i];
+            r.labels = cached[i];
             return r; 
           })
         
@@ -49,9 +50,11 @@ export default (() => {
         
           if (i === set.length-1) {
             if (!cache[type]) {
-              cache[type] = [];
+              cache[type] = {};
             }
-            cache[type][data.index] = set.map((e) => e.labels);
+            cache[type][data.index] = Compressor.compress(
+              set.map((e) => e.labels)
+            );
           }
 
           let chunk = (i === set.length-1) 

@@ -1,15 +1,13 @@
 import Table from "../data/Table.js";
 import Statistics from "../data/Statistics.js";
 import Queries from "../data/Queries.js";
+import Util from "../data/Util.js";
 
 var StatisticsController = (() => {
   let data = {};
 
   return {
 
-    /**
-     * boundaries, type, queries, option, handler
-     */
     compute(params, handler) {
       
       Statistics.query(
@@ -46,8 +44,7 @@ var StatisticsController = (() => {
           let table = Table.items(
             headings,
             data[result.query],
-            result.feature,
-            params.option
+            result.feature
           );
           
           let meta = { 

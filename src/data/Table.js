@@ -51,7 +51,7 @@ export default {
     ];
   },
 
-  items: function (headings, data, feature, fn) {
+  items: function (headings, data, feature) {
     if (Object.keys(data).length === 0) {
       return;
     }
@@ -77,9 +77,17 @@ export default {
         )
     );
 
-    rows = rows.map(fn);
-
     return rows;
+  },
+
+  to: function (table, representation) {
+    return [ 
+      table[0] 
+    ].concat(
+      table
+        .slice(1)
+        .map(representation)
+    );
   },
 
   csv: function (table) {

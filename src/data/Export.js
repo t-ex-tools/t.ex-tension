@@ -46,41 +46,36 @@ export default {
       batch = batch.concat(chunk);
       
       if (shouldDownload(batch, loaded, total)) {
+        let payload = JSON.stringify(batch.splice(0));
         let path = [dataTag, type];
         let filename = [type, n];
         let ext = "json";
-
         filename = this.filename(path, filename, ext);
 
-        this.download(
-          filename, 
-          JSON.stringify([ ...batch ]), 
-          "application/json"
-        );
+        this.download(filename, payload,"application/json");
         
         n++;
-        batch = [];
       }
     });
   },
 
   statistics(boundaries, type, queries, dataTag) {
 
-    Table
-      .options()
-      .forEach((option) => {
-        let params = {
-          condition: (result) => result.loaded === result.total,
-          boundaries: boundaries,
-          type: type,
-          queries: queries,
-          option: option.impl
-        };
+    let params = {
+      condition: (result) => result.loaded === result.total,
+      boundaries: boundaries,
+      type: type,
+      queries: queries
+    };
 
-        StatisticsController
-          .compute(
-            params,
-            (table, meta) => {
+    StatisticsController
+      .compute(
+        params,
+        (table, meta) => {
+
+          Table
+            .options()
+            .forEach((option) => {
               let path = [dataTag, meta.feature];
               let filename = [meta.feature, option.slug, meta.query.label];
               let ext = "csv";
@@ -89,14 +84,12 @@ export default {
 
               this.download(
                 filename,
-                Table.csv(table),
+                Table.csv(Table.to(table, option.impl)),
                 "data:application/csv;charset=utf-8",
-              )
-            }
-          );
-      }
-    );
-    
+              );
+            });
+        }
+      );
   },
 
   filename(path, filename, ext) {
