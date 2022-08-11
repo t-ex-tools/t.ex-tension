@@ -7,7 +7,16 @@ var Statistics = (() => {
 
   let put = (data, value) => (data[value])
     ? data[value]++
-    : data[value] = 1
+    : data[value] = 1;
+
+  let log = (loaded, total) => {
+    window.dispatchEvent(new CustomEvent("statistics:loading:update", {
+      detail: {
+        loaded: loaded,
+        total: total
+      }
+    }));    
+  };
 
   return {
 
@@ -64,6 +73,8 @@ var Statistics = (() => {
               if (stats[query.id][0][feature]) {
                 Object.keys(stats[query.id])
                   .forEach((g, i) => {
+                    log(1, 1);
+
                     handler({
                       feature: feature,
                       query: query.id,
@@ -88,12 +99,7 @@ var Statistics = (() => {
       }
 
       DataStream.labeled(boundaries, type, (chunk, index, total) => {
-        window.dispatchEvent(new CustomEvent("statistics:loading:update", {
-          detail: {
-            loaded: index,
-            total: total
-          }
-        }));
+        log(index, total);
 
         if (!chunk) {
           return;
