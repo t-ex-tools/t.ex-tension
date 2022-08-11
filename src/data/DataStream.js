@@ -48,12 +48,8 @@ var DataStream = (() => {
   return {
 
     unlabeled: (boundaries, handler) => {
-      let loaded = 0;
-      let total = indexes.length;
-
       iterate(boundaries, (chunk, index) => {
-        loaded = index;
-        handler(Object.values(chunk), loaded, total);
+        handler(Object.values(chunk), index, indexes.length-1);
       });
     },
 
