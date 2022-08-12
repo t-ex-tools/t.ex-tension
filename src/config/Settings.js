@@ -27,13 +27,13 @@ export default {
     label: "Tabs at once",
     description: "Max. number of tabs opened simultaneously during a crawl",
     type: "number",
-    default: 20
+    default: 10
   },
   tabTtl: {
     label: "Tab TTL",
     description: "Time-to-live of a tab for websites that load too long during a crawl (in seconds)",
     type: "number",
-    default: 60
+    default: 45
   },
   chunkSize: {
     label: "Chunk size",
@@ -55,9 +55,9 @@ export default {
   },
   numberOfWorkers: {
     label: "Number of workers",
-    description: "Number of Labeler workers to be used for labeling data; default: navigator.hardwareConcurrency; Change will restart the extension",
+    description: "Number of Labeler workers to be used for labeling data; default: 4; Change will restart the extension",
     type: "number",
-    default: navigator.hardwareConcurrency,
+    default: 4,
     handler: (value) => {
       window.location.reload();
     }
