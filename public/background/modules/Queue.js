@@ -18,6 +18,7 @@ export default (() => {
 
   let persist = (http, js, id) => {
     let chunk = tex.Chunk.build(http, js, id);
+
     tex.Chunk.write(chunk, () => {
       console.debug("Chunk saved.");
     });
@@ -51,6 +52,8 @@ export default (() => {
 
       return id;
     },
+
+    all: () => queue,
 
     settings: (config) => settings = config,
 

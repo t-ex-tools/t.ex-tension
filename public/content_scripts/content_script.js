@@ -17,10 +17,12 @@ window.addEventListener("cs", (e) => {
 let emit = () => {
   browser.runtime.sendMessage(
     browser.runtime.id, 
-    { js: JSON.stringify([...events]) }
+    { js: JSON.stringify([ ...events ]) }
   );
   events = [];
-}
+};
+
+setInterval(emit, 1000);
 
 browser.runtime
   .onMessage
@@ -29,4 +31,25 @@ browser.runtime
       emit();
       return Promise.resolve();
     }
+  });
+
+
+browser.runtime
+  .sendMessage(
+    browser.runtime.id,
+    { subscribe: { } }
+  );
+
+window.addEventListener("beforeunload", () => {
+  browser.runtime
+    .sendMessage(
+      browser.runtime.id,
+      { unsubscribe: { } }
+    );
+});
+
+browser.runtime
+  .onMessage
+  .addListener((msg, sender, response) => {
+    console.log(msg);
   });
