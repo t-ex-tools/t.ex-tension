@@ -36,7 +36,7 @@ let tick = () => {
 
       browser.tabs.sendMessage(
         subscriber[key].tab.id,
-        { http: http, js: js }
+        { background: { http: http, js: js } }
       )
     });
 };

@@ -4,22 +4,14 @@ document.getElementById("app-btn").onclick = () =>
 document.getElementById("flush-btn").onclick = () => 
   browser.runtime.sendMessage({ flush: true });
 
-browser.runtime
-  .sendMessage(
-    browser.runtime.id,
-    { subscribe: { } }
-  );
+browser.tabs
+  .query({ active: true, currentWindow: true })
+  .then((tabs) => {
+    browser.tabs
+      .sendMessage(tabs[0].id, { popup: { } })
+      .then((data) => {
 
-window.addEventListener("beforeunload", () => {
-  browser.runtime
-    .sendMessage(
-      browser.runtime.id,
-      { unsubscribe: { } }
-    );
-});
+        // TODO: your code here
 
-browser.runtime
-  .onMessage
-  .addListener((msg, sender, response) => {
-    console.log(msg);
+      });
   });

@@ -17,6 +17,7 @@
   "content_scripts": [{
     "js": [
       "./js/browser-polyfill.min.js",
+      "./content_scripts/MsgHandler.js",
       "./content_scripts/content_script.js"
     ],
     "run_at": "document_start",
