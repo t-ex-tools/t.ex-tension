@@ -1,7 +1,7 @@
 import Compressor from "./Compressor.js";
 import Preprocessor from "./Preprocessor.js";
 import Blocklists from "../config/Blocklists.js";
-import { Labeler } from "../../../labeler-core/dist/labeler-core.module.js";
+import { Labeler } from "../../node_modules/labeler-core/dist/labeler-core.module.js";
 
 export default (() => {
   let cache = {};

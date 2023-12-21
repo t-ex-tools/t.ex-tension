@@ -1,4 +1,4 @@
-import { Labeler } from "labeler-core/dist/labeler-core.module.js";
+import { Labeler } from "../../node_modules/labeler-core/dist/labeler-core.module.js";
 
 export default [{
   name: "EasyList",
