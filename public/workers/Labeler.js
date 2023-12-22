@@ -17,7 +17,11 @@ let handler = {
   "get": {
     handle: function(msg) {
       this.msg = msg;
-      tex.LabelerProcess.exec(msg, h.bind(this));
+      Promise
+        .resolve(tex.LabelerProcess)
+        .then((module) => {
+          module.exec(msg, h.bind(this));
+        });
     }
   },
 

@@ -1,15 +1,17 @@
 import Compressor from "./Compressor.js";
 import Preprocessor from "./Preprocessor.js";
 import Blocklists from "../config/Blocklists.js";
-import { Labeler } from "../../node_modules/labeler-core/dist/labeler-core.module.js";
+import { BlockList } from "labeler-core";
 
-export default (() => {
+export default (async () => {
   let cache = {};
   const interval = 1250;
   
   let blocklists = Blocklists
     .filter((l) => l.active)
-    .map((e) => new Labeler.BlockList(e.name, e.url, e.evaluator));
+    .map((e) => new BlockList(e.name, e.url, e.evaluator));
+
+  await Promise.allSettled(blocklists.map((l) => l.init()));
 
   return {
 
