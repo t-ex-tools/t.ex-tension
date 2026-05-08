@@ -1,6 +1,5 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = (env) => {
 
@@ -52,8 +51,7 @@ module.exports = (env) => {
             to: "manifest.json"
           }
         ],
-      }),
-      new ESLintPlugin()
+      })
     ],
     resolve: {
       extensions: [".js"],
@@ -78,9 +76,6 @@ module.exports = (env) => {
         type: "var"
       },
     },
-    plugins: [
-      new ESLintPlugin()
-    ],
     resolve: {
       extensions: [".js"],
       modules: [
